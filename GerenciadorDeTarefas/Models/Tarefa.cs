@@ -5,7 +5,7 @@ namespace GerenciadorDeTarefas.Models
 {
     public class Tarefa
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]

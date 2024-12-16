@@ -1,19 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GerenciadorDeTarefas.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GerenciadorDeTarefas.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TarefaController : Controller
+    public class TarefaController : ControllerBase
     {
-        //private readonly 
-        public TarefaController() 
-        {
-            
-        }
 
         [HttpGet]
-        public ActionResult<List<Task>> GetAllTasks()
+        public ActionResult<List<Tarefa>> GetAllTarefas()
         {
             return Ok();
         }

@@ -10,7 +10,7 @@ namespace GerenciadorDeTarefas.Data
             
         }
 
-        public DbSet<Tarefa> Tarefa { get; set; }
+        public DbSet<Tarefa> Tarefas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
