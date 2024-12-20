@@ -32,7 +32,7 @@ namespace GerenciadorDeTarefas.Repositories
             return tarefa;
         }
 
-        public async Task<bool> Delete(Tarefa tarefa, long id)
+        public async Task<bool> Delete(long id)
         {
             Tarefa tarefaById = await GetById(id);
 
@@ -40,10 +40,10 @@ namespace GerenciadorDeTarefas.Repositories
             {
                 throw new Exception($"Tarefa para o id: {id}, não foi encontrado.");
             }
+
             _tarefaDb.Tarefas.Remove(tarefaById);
             await _tarefaDb.SaveChangesAsync();
             return true;
-
         }
 
         public async Task<Tarefa> Update(Tarefa tarefa, long id)

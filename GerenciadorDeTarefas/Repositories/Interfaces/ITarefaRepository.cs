@@ -7,7 +7,7 @@ namespace GerenciadorDeTarefas.Repositories.Interfaces
         Task<Tarefa> GetById(long id);
         Task<List<Tarefa>> GetAllTarefas();
         Task<Tarefa> Create(Tarefa tarefa);
-        Task<bool> Delete(Tarefa tarefa, long id); //verificar depois
+        Task<bool> Delete(long id);
         Task<Tarefa> Update(Tarefa tarefa, long id);
 
     }

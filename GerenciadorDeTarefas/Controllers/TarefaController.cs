@@ -1,4 +1,5 @@
-﻿using GerenciadorDeTarefas.Models;
+﻿using GerenciadorDeTarefas.Data;
+using GerenciadorDeTarefas.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GerenciadorDeTarefas.Controllers
@@ -7,6 +8,13 @@ namespace GerenciadorDeTarefas.Controllers
     [ApiController]
     public class TarefaController : ControllerBase
     {
+        private readonly TarefaDb _db;
+
+        public TarefaController(TarefaDb db)
+        {
+            _db = db;
+        }
+
 
         [HttpGet]
         public ActionResult<List<Tarefa>> GetAllTarefas()

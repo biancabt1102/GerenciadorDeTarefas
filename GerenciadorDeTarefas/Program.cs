@@ -1,4 +1,9 @@
 
+using GerenciadorDeTarefas.Data;
+using GerenciadorDeTarefas.Repositories;
+using GerenciadorDeTarefas.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 namespace GerenciadorDeTarefas
 {
     public class Program
@@ -13,6 +18,11 @@ namespace GerenciadorDeTarefas
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddEntityFrameworkSqlServer()
+                .AddDbContext<TarefaDb>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
+
+            builder.Services.AddScoped<ITarefaRepository, TarefaRepository>();
 
             var app = builder.Build();
 
