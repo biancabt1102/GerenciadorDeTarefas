@@ -20,6 +20,10 @@ namespace GerenciadorDeTarefas
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Configuration
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettingsSecrets.json", optional: true, reloadOnChange: true);
+
             builder.Services
                 .AddDbContext<TarefaDb>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
 

@@ -1,5 +1,5 @@
-﻿using GerenciadorDeTarefas.Data;
-using GerenciadorDeTarefas.Models;
+﻿using GerenciadorDeTarefas.Models;
+using GerenciadorDeTarefas.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GerenciadorDeTarefas.Controllers
@@ -8,36 +8,49 @@ namespace GerenciadorDeTarefas.Controllers
     [ApiController]
     public class TarefaController : ControllerBase
     {
-        private readonly TarefaDb _db;
+        private readonly ITarefaRepository _tarefaRepository;
 
-        public TarefaController(TarefaDb db)
+        public TarefaController(ITarefaRepository tarefaRepository)
         {
-            _db = db;
+            _tarefaRepository = tarefaRepository;
         }
 
 
         [HttpGet]
-        public ActionResult<List<Tarefa>> GetAllTarefas()
+        public async Task<ActionResult<List<Tarefa>>> GetAllTarefas()
         {
-            return Ok();
+            List<Tarefa> tarefas = await _tarefaRepository.GetAllTarefas();
+            return Ok(tarefas);
         }
 
-        //[HttpPost]
-        //public ActionResult PostTask(Task task)
-        //{
-        //    return Ok(task);
-        //}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Tarefa>> GetTarefaById(long id)
+        {
+           Tarefa tarefa = await _tarefaRepository.GetById(id);
+            return Ok(tarefa);
+        }
 
-        //[HttpPut]
-        //public ActionResult PutTask(Task task)
-        //{
-        //    return Ok(task);
-        //}
+        [HttpPost]
+        public async Task<ActionResult<Tarefa>> CreateTask([FromBody] Tarefa tarefa)
+        {
+            Tarefa tarefas = await _tarefaRepository.Create(tarefa);
+            return Ok(tarefas);
+        }
 
-        //[HttpDelete]
-        //public ActionResult Delete(int id)
-        //{
-        //    return Ok();
-        //}
+        [HttpPut]
+        public async Task<ActionResult<Tarefa>> Update([FromBody] Tarefa tarefa,long id)
+        {
+            tarefa.Id = id;
+            Tarefa tarefaAtualizada = await _tarefaRepository.Update(tarefa, id);
+            return Ok(tarefaAtualizada);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Tarefa>> Delete(long id)
+        {
+            bool apagado = await _tarefaRepository.Delete(id);
+            return Ok(apagado);
+        }
     }
 }

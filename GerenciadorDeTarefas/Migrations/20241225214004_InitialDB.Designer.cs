@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GerenciadorDeTarefas.Migrations
 {
     [DbContext(typeof(TarefaDb))]
-    [Migration("20241225204618_InitialDB")]
+    [Migration("20241225214004_InitialDB")]
     partial class InitialDB
     {
         /// <inheritdoc />
@@ -58,11 +58,11 @@ namespace GerenciadorDeTarefas.Migrations
 
             modelBuilder.Entity("GerenciadorDeTarefas.Models.Usuario", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
