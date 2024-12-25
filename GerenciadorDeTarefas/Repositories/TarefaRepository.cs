@@ -58,6 +58,7 @@ namespace GerenciadorDeTarefas.Repositories
             tarefaById.Title = tarefa.Title;
             tarefaById.Description = tarefa.Description;
             tarefaById.DateCreation = tarefa.DateCreation;
+            tarefaById.Status = tarefa.Status;
 
             _tarefaDb.Tarefas.Update(tarefaById);
             await _tarefaDb.SaveChangesAsync(); 

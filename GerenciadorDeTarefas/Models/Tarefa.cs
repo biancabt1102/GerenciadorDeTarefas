@@ -11,6 +11,7 @@ namespace GerenciadorDeTarefas.Models
         [Required]
         [MaxLength(255)]
         public string Description { get; set; }
+        [Required]
         public Status Status { get; set; }
         public DateTime DateCreation { get; set; }
     }

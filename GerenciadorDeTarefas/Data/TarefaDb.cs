@@ -1,4 +1,5 @@
-﻿using GerenciadorDeTarefas.Models;
+﻿using GerenciadorDeTarefas.Data.Map;
+using GerenciadorDeTarefas.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GerenciadorDeTarefas.Data
@@ -15,6 +16,8 @@ namespace GerenciadorDeTarefas.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new UsuarioMap());
+            modelBuilder.ApplyConfiguration(new TarefaMap());
             base.OnModelCreating(modelBuilder);
         }
     }
