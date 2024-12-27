@@ -14,5 +14,8 @@ namespace GerenciadorDeTarefas.Models
         [Required]
         public Status Status { get; set; }
         public DateTime DateCreation { get; set; }
+        public long? UsuarioId { get; set; }
+
+        public virtual Usuario? Usuario { get; set; }
     }
 }

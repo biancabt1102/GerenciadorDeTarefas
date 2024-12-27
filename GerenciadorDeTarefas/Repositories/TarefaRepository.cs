@@ -2,8 +2,6 @@
 using GerenciadorDeTarefas.Data;
 using GerenciadorDeTarefas.Models;
 using GerenciadorDeTarefas.Repositories.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GerenciadorDeTarefas.Repositories
@@ -18,12 +16,16 @@ namespace GerenciadorDeTarefas.Repositories
         }
         public async Task<List<Tarefa>> GetAllTarefas()
         {
-            return await _tarefaDb.Tarefas.ToListAsync();
+            return await _tarefaDb.Tarefas
+                .Include(x => x.Usuario)
+                .ToListAsync();
         }
 
         public async Task<Tarefa> GetById(long id)
         {
-            return await _tarefaDb.Tarefas.FirstOrDefaultAsync(x => x.Id == id);
+            return await _tarefaDb.Tarefas
+                .Include(x => x.Usuario)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task<Tarefa> Create(Tarefa tarefa)
         {
@@ -38,7 +40,7 @@ namespace GerenciadorDeTarefas.Repositories
 
             if (tarefaById == null)
             {
-                throw new Exception($"Tarefa para o id: {id}, não foi encontrado.");
+                throw new Exception($"Tarefa para o id = {id}, não foi encontrado.");
             }
 
             _tarefaDb.Tarefas.Remove(tarefaById);
@@ -52,13 +54,14 @@ namespace GerenciadorDeTarefas.Repositories
 
             if (tarefaById == null)
             {
-                throw new Exception($"Tarefa para o id: {id}, não foi encontrado.");
+                throw new Exception($"Tarefa para o id = {id}, não foi encontrado.");
             }
 
             tarefaById.Title = tarefa.Title;
             tarefaById.Description = tarefa.Description;
             tarefaById.DateCreation = tarefa.DateCreation;
             tarefaById.Status = tarefa.Status;
+            tarefaById.UsuarioId = tarefa.UsuarioId;
 
             _tarefaDb.Tarefas.Update(tarefaById);
             await _tarefaDb.SaveChangesAsync(); 

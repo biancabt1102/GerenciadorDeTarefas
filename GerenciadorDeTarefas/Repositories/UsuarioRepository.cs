@@ -27,7 +27,7 @@ namespace GerenciadorDeTarefas.Repositories
 
             if (usuarioId == null)
             {
-                throw new Exception($"Usuário de Id={id}, não foi encontrado.");
+                throw new Exception($"Usuário de Id = {id}, não foi encontrado.");
             }
 
             _context.Usuarios.Remove(usuarioId);
@@ -51,7 +51,7 @@ namespace GerenciadorDeTarefas.Repositories
 
             if (usuarioId == null)
             {
-                throw new Exception($"Usuário com o Id={id} não foi encontrado");
+                throw new Exception($"Usuário com o Id = {id} não foi encontrado");
             }
 
             usuarioId.Name = usuario.Name;

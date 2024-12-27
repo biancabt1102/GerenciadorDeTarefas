@@ -13,6 +13,8 @@ namespace GerenciadorDeTarefas.Data.Map
             builder.Property(x => x.Description).IsRequired().HasMaxLength(1000);
             builder.Property(x => x.Status).IsRequired();
             builder.Property(x => x.DateCreation).IsRequired().HasDefaultValueSql("GETDATE()");
+            builder.Property(x => x.UsuarioId);
+            builder.HasOne(x => x.Usuario);
         }
     }
 }
