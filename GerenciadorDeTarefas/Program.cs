@@ -3,7 +3,9 @@ using GerenciadorDeTarefas.Data;
 using GerenciadorDeTarefas.Repositories;
 using GerenciadorDeTarefas.Repositories.Interfaces;
 using Microsoft.Data.SqlClient;
+using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace GerenciadorDeTarefas
 {
@@ -18,7 +20,24 @@ namespace GerenciadorDeTarefas
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Gerenciador de tarefas",
+                    Description = "An ASP.NET Core Web API for managing todo tasks.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Bianca Teixeira",
+                        Url = new Uri("https://github.com/biancabt")
+                    }
+                });
+
+                var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+            });
 
             builder.Configuration
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -48,6 +67,7 @@ namespace GerenciadorDeTarefas
             app.MapControllers();
 
             app.Run();
+
         }
     }
 }
