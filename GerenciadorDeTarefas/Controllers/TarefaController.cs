@@ -83,10 +83,12 @@ namespace GerenciadorDeTarefas.Controllers
         /// <param name="tarefa"></param>
         /// <returns>Created task.</returns>
         /// <response code="201">Returns the newly created task.</response>
+        /// <response code="204">Task created, but no content.</response>
         /// <response code="400">If the task is null.</response>
         /// <response code="409">The task has been created.</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -100,7 +102,7 @@ namespace GerenciadorDeTarefas.Controllers
             try
             {
                 Tarefa tarefas = await _tarefaRepository.Create(tarefa);
-                return Created();
+                return Created($"api/tarefa/{tarefas.Id}", tarefas);
             }
             catch
             {
