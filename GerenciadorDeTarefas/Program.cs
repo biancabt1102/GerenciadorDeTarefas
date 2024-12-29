@@ -6,6 +6,10 @@ using Microsoft.Data.SqlClient;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using GerenciadorDeTarefas.Integration.Refit;
+using Refit;
+using GerenciadorDeTarefas.Integration.Interfaces;
+using GerenciadorDeTarefas.Integration;
 
 namespace GerenciadorDeTarefas
 {
@@ -49,6 +53,14 @@ namespace GerenciadorDeTarefas
             //Dependência do repositório
             builder.Services.AddScoped<ITarefaRepository, TarefaRepository>();
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+            //consumindo a API ViaCep
+            builder.Services.AddRefitClient<IViaCepIntegrationRefit>().ConfigureHttpClient(c =>
+            {
+                c.BaseAddress = new Uri("https://viacep.com.br");
+            });
+
+            builder.Services.AddScoped<IViaCepIntegration, ViaCepIntegration>();
 
             var app = builder.Build();
 
